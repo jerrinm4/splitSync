@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 252 90% 78%;
+    --primary-foreground: 240 10% 3.9%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 85% 75%;
+    --destructive-foreground: 240 10% 3.9%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 252 87% 67%;
+    --radius: 0.75rem;
+  }
+
+  .light {
+    color-scheme: light;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 252 65% 42%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 6% 37%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 72% 38%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 252 87% 67%;
+  }
+
+  /* Yellow Theme Overrides */
+  .theme-yellow {
+    --primary: 45 93% 47%;
+    --primary-foreground: 0 0% 0%;
+    --accent: 45 93% 47%;
+    --accent-foreground: 0 0% 0%;
+    --ring: 45 93% 47%;
+  }
+
+  .theme-yellow.light {
+    --primary: 35 85% 27%;
+    --primary-foreground: 0 0% 98%;
+    --accent: 40 30% 94%;
+    --accent-foreground: 240 10% 3.9%;
+    --ring: 35 85% 27%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-primary/30;
+    overflow-wrap: anywhere;
+    /* Soft gradient background */
+    background-image: radial-gradient(circle at top right, hsl(var(--primary) / 0.05), transparent 400px), 
+                      radial-gradient(circle at bottom left, hsl(var(--accent) / 0.05), transparent 400px);
+    background-attachment: fixed;
+  }
+}
+
+/* Glassmorphism utilities */
+@layer utilities {
+  .glass {
+    @apply bg-background/95 backdrop-blur-md border border-white/10 shadow-lg;
+  }
+  .glass-card {
+    @apply bg-card/60 backdrop-blur-md border border-white/5 shadow-xl transition-all duration-300 hover:shadow-primary/5 hover:border-primary/20;
+  }
+  .animate-in-up {
+    animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+@keyframes slideUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--primary) / 0.5);
+}
+
+/* Fix native date picker icon visibility in dark mode */
+::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(100%);
+  opacity: 0.6;
+  cursor: pointer;
+}
+::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+.light ::-webkit-calendar-picker-indicator {
+  filter: none;
+}
+
+:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
